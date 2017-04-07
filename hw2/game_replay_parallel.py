@@ -193,7 +193,7 @@ class GameBatch_Parallel:
 
         self.state_shape = (past_frame,) + frame_size
         self.action_n = action_n
-
+        # I think he is defining arrays to place information afterwards. When it is not eval he creates another set of placeholders (why?)
         self.shared_arrs = (mp.Array(ctypes.c_int32, size, lock=False),
                             mp.Array(ctypes.c_float, size * past_frame * frame_size[0] * frame_size[1], lock=False),
                             mp.Array(ctypes.c_float, size, lock=False),

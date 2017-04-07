@@ -153,16 +153,18 @@ class DeepLearner(Learner):
         self.sess = sess
         
         with tf.variable_scope(name):
-            self.input_tensor = tf.placeholder(tf.float32, 
+            self.input_tensor = tf.placeholder(tf.float32,
                                             shape = (batch_size,) + state_shape,
                                             name = 'input')
+            self.channels_last = tf.transpose(self.input_tensor,perm=[0,2,3,1])
             with tf.variable_scope('model'):
                 with tf.variable_scope('conv_layers'):
-                    self.conv1 = tf.layers.conv2d(inputs = self.input_tensor,
+                    self.conv1 = tf.layers.conv2d(inputs = self.channels_last,
                                                 filters = 16,
                                                 kernel_size= (8,8),
                                                 strides = (4,4),
-                                                data_format = 'channels_first',
+                                                #must change so that it works on CPU
+                                                #data_format = 'channels_first',
                                                 kernel_initializer = tf.contrib.layers.xavier_initializer(),
                                                 bias_initializer = tf.constant_initializer(),
                                                 activation = tf.nn.relu,
@@ -171,7 +173,7 @@ class DeepLearner(Learner):
                                                 filters = 32,
                                                 kernel_size= (4,4),
                                                 strides = (2,2),
-                                                data_format = 'channels_first',
+                                                #data_format = 'channels_first',
                                                 kernel_initializer = tf.contrib.layers.xavier_initializer(),
                                                 bias_initializer = tf.constant_initializer(),
                                                 activation = tf.nn.relu,
