@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 outputs/
+test.py
 pyenvdqn/
 env/
 build/
